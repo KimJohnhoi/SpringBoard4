@@ -75,7 +75,7 @@ public class BoardController {
 		// 게시판 내용 가져오기
 		boardDTO = boardMapper.getBoard(boardDTO);
 		
-		// 게시판 이름 가져오기
+		// 메뉴 이름 가져오기
 		menuDTO = menuMapper.getMenu(menuDTO);
 		
 		ModelAndView mv = new ModelAndView();
@@ -86,6 +86,29 @@ public class BoardController {
 		return mv;
 	}
 	
+	/*
+	파라미터에서 MenuDTO menuDTO 안받고, 링크에서 menu_id 안 넘겨줄 경우
+	public ModelAndView view(BoardDTO boardDTO) {
+		
+		// 메뉴 리스트
+		List<MenuDTO> menuList = menuMapper.getMenuList();
+		
+		// 게시판 내용 가져오기
+		boardDTO = boardMapper.getBoard(boardDTO);
+		
+		// 메뉴 이름 가져오기
+		String menu_id = boardDTO.getMenu_id();
+		MenuDTO menuDTO = new MenuDTO(menu_id, null, 0);
+		menuDTO = menuMapper.getMenu(menuDTO);
+				
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("menuList", menuList);
+		mv.addObject("menuName", menuDTO);
+		mv.addObject("view", boardDTO);
+		mv.setViewName("board/updateForm");
+		return mv;
+	}*/
+	
 	@RequestMapping("/Board/UpdateForm")
 	public ModelAndView updateForm(BoardDTO boardDTO, MenuDTO menuDTO) {
 		
@@ -95,7 +118,7 @@ public class BoardController {
 		// 게시판 내용 가져오기
 		boardDTO = boardMapper.getBoard(boardDTO);
 		
-		// 게시판 이름 가져오기
+		// 메뉴 이름 가져오기
 		menuDTO = menuMapper.getMenu(menuDTO);
 				
 		ModelAndView mv = new ModelAndView();
@@ -108,8 +131,9 @@ public class BoardController {
 	
 	@RequestMapping("/Board/Update")
 	public ModelAndView update(BoardDTO boardDTO) {
-		boardMapper.updateBoard(boardDTO);		
 		String menu_id = boardDTO.getMenu_id();
+		
+		boardMapper.updateBoard(boardDTO);		
 		
 		ModelAndView mv = new ModelAndView();		
 		mv.setViewName("redirect:/Board/List?menu_id="+menu_id);
@@ -118,8 +142,7 @@ public class BoardController {
 	
 	@RequestMapping("/Board/Delete")
 	public ModelAndView delete(BoardDTO boardDTO) {
-		BoardDTO board = boardMapper.getBoard(boardDTO);
-		String menu_id = board.getMenu_id();
+		String menu_id = boardDTO.getMenu_id();
 		
 		boardMapper.delBoard(boardDTO);
 
