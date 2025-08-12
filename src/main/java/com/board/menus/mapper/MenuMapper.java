@@ -1,7 +1,6 @@
 package com.board.menus.mapper;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import com.board.menus.domain.MenuDTO;
 
@@ -19,4 +18,5 @@ public interface MenuMapper {
 	void updateMenu(MenuDTO menuDTO);
 
 	void insertMenu2(MenuDTO menuDTO);
+
 }
