@@ -48,16 +48,16 @@ public class BoardController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("menuList", menuList);
-		mv.addObject("menuName", menuDTO);
+		mv.addObject("menu", menuDTO);
 		mv.setViewName("board/write");
 		return mv;
 	}
 	
 	@RequestMapping("/Board/Write")
 	public ModelAndView write(BoardDTO boardDTO) {
-		boardMapper.insertBoard(boardDTO);
-		
+		boardMapper.insertBoard(boardDTO);		
 		String menu_id = boardDTO.getMenu_id();
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/Board/List?menu_id="+menu_id);
 		return mv;
@@ -69,6 +69,9 @@ public class BoardController {
 		// 메뉴 리스트
 		List<MenuDTO> menuList = menuMapper.getMenuList();
 		
+		// 조회수 업데이트하기
+		boardMapper.updateHit(boardDTO);
+		
 		// 게시판 내용 가져오기
 		boardDTO = boardMapper.getBoard(boardDTO);
 		
@@ -77,10 +80,9 @@ public class BoardController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("menuList", menuList);
-		mv.addObject("menuName", menuDTO);
+		mv.addObject("menu", menuDTO);
 		mv.addObject("view", boardDTO);
-		mv.setViewName("board/view");
-		
+		mv.setViewName("board/view");		
 		return mv;
 	}
 	
@@ -106,9 +108,9 @@ public class BoardController {
 	
 	@RequestMapping("/Board/Update")
 	public ModelAndView update(BoardDTO boardDTO) {
-		boardMapper.updateBoard(boardDTO);
-		
+		boardMapper.updateBoard(boardDTO);		
 		String menu_id = boardDTO.getMenu_id();
+		
 		ModelAndView mv = new ModelAndView();		
 		mv.setViewName("redirect:/Board/List?menu_id="+menu_id);
 		return mv;

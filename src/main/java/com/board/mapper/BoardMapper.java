@@ -12,10 +12,11 @@ public interface BoardMapper {
 
 	void insertBoard(BoardDTO boardDTO);
 
+	void updateHit(BoardDTO boardDTO);
+	
 	BoardDTO getBoard(BoardDTO boardDTO);
 
 	void updateBoard(BoardDTO boardDTO);
 
 	void delBoard(BoardDTO boardDTO);
-
 }
